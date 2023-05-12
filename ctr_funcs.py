@@ -3,16 +3,17 @@ import numpy as np
 import datetime
 from sklearn import metrics
 
+#计算auc
 def cal_auc(pred_score, label):
     fpr, tpr, thresholds = metrics.roc_curve(label, pred_score, pos_label=1)
     auc_val = metrics.auc(fpr, tpr)
     return auc_val, fpr, tpr
-
+#计算mse
 def cal_rmse(pred_score, label):
     mse = metrics.mean_squared_error(label, pred_score)
     rmse = np.sqrt(mse)
     return rmse
-
+#不太知道
 def cal_rectified_rmse(pred_score, label, sample_rate):
     for idx, item in enumerate(pred_score):
         pred_score[idx] = item/(item + (1-item)/sample_rate)
@@ -21,11 +22,12 @@ def cal_rectified_rmse(pred_score, label, sample_rate):
     return rmse
 
 # only works for 2D list
+# 把数据拉成一行
 def list_flatten(input_list):
     output_list = [yy for xx in input_list for yy in xx]
     return output_list
 
-
+#计算文件的行数
 def count_lines(file_name):
     num_lines = sum(1 for line in open(file_name, 'rt'))
     return num_lines
